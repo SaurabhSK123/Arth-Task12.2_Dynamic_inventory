@@ -1,0 +1,10 @@
+
+region: ap-south-1
+instance_type: t2.micro
+instance_key_name: mykey.pem 
+image: ami-0bcf5425cdc1d8a85
+subnet_id: subnet-5dcf2936
+sg: sg-fbcb8580
+webserver_count: 2
+loadbalancer_count: 1
+webserver_package: httpd

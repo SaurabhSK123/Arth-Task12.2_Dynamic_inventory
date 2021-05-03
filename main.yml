@@ -1,0 +1,48 @@
+
+- hosts: tag_Name_BackendServer
+  var_files: vars.yml
+  tasks: 
+      - name: Installing  Aapache and php Software...
+        package: 
+            name: 
+                - "{{ webserver_package }}"
+                - "php"
+                - "net-tools"
+            state: present
+
+      - name: copying Webpages 
+        template:
+            src: "index.php" 
+            dest: "/var/www/html/index.html"
+        notify: webserver
+
+  handlers:
+      - name: webserver
+        service: 
+            name: "{{ webserver_package }}"
+            state: restarted
+            enabled: yes
+
+ # Launching Load Balancer
+  
+- hosts: tag_Name_LoadBalancer
+  tasks:
+      - name: Installing Haproxy Software...
+        package:
+            name: "haproxy"
+            state: present
+
+      - name: Configuring Haproxy ....
+        template:
+            src: "/etc/haproxy/haproxy.cfg"
+            dest: "/etc/haproxy/haproxy.cfg"
+        notify: loadbalancer
+
+  handlers:
+      - name: loadbalancer
+        service:
+            name: "haproxy"
+            state: restarted
+            enabled: yes
+       
+

@@ -1,0 +1,40 @@
+ - hosts: localhost
+   vars_files:
+           -  vars.yml
+           -  key.yml
+   tasks:
+           - name: Launch Backend Server on AWS
+             ec2:
+                 region: "{{ region }}"
+                 instance_type: "{{ instance_type }}"
+                 key_name: "{{ instance_key_name }}"
+                 image: "{{ image }}"
+                 vpc_subnet_id: "{{ subnet_id }}"
+                 group_id: "{{ sg }}"
+                 count: "{{ webserver_count }}"
+                 wait: yes
+                 instance_tags:
+                     name: "BackendServer"
+                 state: present
+                 assign_public_ip: yes
+                 aws_access_key: "{{ a_key }}"
+                 aws_secret_key: "{{ s_key }}"
+
+
+           - name: Launch LoadBalancer on AWS
+             ec2:
+                 region: "{{ region }"
+                 instance_type: "{{ instance_type }}"
+                 key_name: "{{ instance_key_name }}"
+                 image: "{{ image }}"
+                 group_id: "{{ sg }}"
+                 vpc_subnet_id: "{{ subnet_id }}"
+                 count: "{{ loadbalancer_count }}"
+                 wait: yes
+                 instance_tags:
+                     name: "LoadBlancer"
+                 state: present
+                 assign_public_ip: yes
+                 aws_access_key: "{{ a_key }}"
+                 aws_secret_key: "{{ s_key }}"
+
