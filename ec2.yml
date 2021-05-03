@@ -24,7 +24,7 @@
 
            - name: Launch LoadBalancer on AWS
              ec2:
-                 region: "{{ region }"
+                 region: "{{ region }}"
                  instance_type: "{{ instance_type }}"
                  key_name: "{{ instance_key_name }}"
                  image: "{{ image }}"
