@@ -21,6 +21,7 @@
                  aws_secret_key: "{{ s_key }}"
 
 
+
            - name: Launch LoadBalancer on AWS
              ec2:
                  region: "{{ region }"
